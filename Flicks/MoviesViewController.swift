@@ -19,12 +19,15 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "loadMovies:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
         tableView.delegate = self
         tableView.dataSource = self
-        loadMovies()
+        loadMovies(refreshControl)
     }
 
-    func loadMovies() {
+    func loadMovies(refreshControl: UIRefreshControl) {
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         Alamofire.request(.GET, Settings.apiRoot + endpoint!, parameters: ["api_key": Settings.apiKey])
             .validate().responseJSON { response in
@@ -39,6 +42,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 case .Failure(let error):
                     print(error)
                 }
+                refreshControl.endRefreshing()
         }
     }
     
@@ -62,9 +66,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
 
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let cell = sender as! UITableViewCell
         let indexPath = tableView.indexPathForCell(cell)
