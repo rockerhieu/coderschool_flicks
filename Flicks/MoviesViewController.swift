@@ -14,6 +14,8 @@ import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var errorView: UIView!
+
     var movies: [JSON]?
     var endpoint: String?
     override func viewDidLoad() {
@@ -40,7 +42,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.tableView.reloadData()
                     }
                 case .Failure(let error):
-                    print(error)
+                    errorView.s
                 }
                 refreshControl.endRefreshing()
         }
