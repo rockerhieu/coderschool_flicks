@@ -40,9 +40,12 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         let json = JSON(value)
                         self.movies = json["results"].array
                         self.tableView.reloadData()
+                        self.errorView.hidden = true
                     }
+                    break
                 case .Failure(let error):
-                    errorView.s
+                    self.errorView.hidden = false
+                    break
                 }
                 refreshControl.endRefreshing()
         }
