@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import AFNetworking
+import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var movies: [JSON]?
-
     @IBOutlet weak var tableView: UITableView!
-
+    var movies: [JSON]?
+    var endpoint: String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,8 +25,10 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     func loadMovies() {
-        Alamofire.request(.GET, Settings.endpointNowPlaying, parameters: ["api_key": Settings.apiKey])
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        Alamofire.request(.GET, Settings.apiRoot + endpoint!, parameters: ["api_key": Settings.apiKey])
             .validate().responseJSON { response in
+                MBProgressHUD.hideHUDForView(self.view, animated: true)
                 switch response.result {
                 case .Success:
                     if let value = response.result.value {
