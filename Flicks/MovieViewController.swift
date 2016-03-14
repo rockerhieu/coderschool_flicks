@@ -30,7 +30,7 @@ class MovieViewController: UIViewController {
             let imageUrl = NSURL(string: Settings.endpointImage + posterPath)
             posterView.setImageWithURL(imageUrl!)
         } else {
-            posterView.setImageWithURL(NSURL())
+            posterView.image = nil
         }
     }
 }
