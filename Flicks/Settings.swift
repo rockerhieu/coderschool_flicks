@@ -14,5 +14,7 @@ class Settings {
     static let apiRoot = "http://api.themoviedb.org/3/movie/"
     static let nowPlaying = "now_playing"
     static let topRated = "top_rated"
-    static let endpointImage = "http://image.tmdb.org/t/p/w500"
+    static func getImageUrl(path: String, size: Int = 500) -> NSURL {
+        return NSURL(string:"http://image.tmdb.org/t/p/w\(size)\(path)")!
+    }
 }

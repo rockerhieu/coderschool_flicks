@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import AFNetworking
+import AlamofireImage
 import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
@@ -159,18 +159,19 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.overviewLabel.text = overview
         cell.posterView.image = nil
         if let posterPath = movie["poster_path"].string {
-            let imageUrl = NSURL(string: Settings.endpointImage + posterPath)
-            cell.posterView.setImageWithURL(imageUrl!)
+            let imageUrl = Settings.getImageUrl(posterPath, size: 154)
+            cell.posterView.af_setImageWithURL(imageUrl, imageTransition: .CrossDissolve(0.2))
         }
         return cell
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let cell = sender as! UITableViewCell
+        let cell = sender as! MovieCell
         let indexPath = tableView.indexPathForCell(cell)
         let movie = movies![indexPath!.row]
         let movieViewController = segue.destinationViewController as! MovieViewController
         movieViewController.movie = movie
+        movieViewController.posterImage = cell.posterView.image
     }
 }
 

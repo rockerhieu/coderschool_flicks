@@ -6,7 +6,7 @@ use_frameworks!
 target 'Flicks' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
-  pod 'AFNetworking'
+  pod 'AlamofireImage'
   pod 'MBProgressHUD'
 end
 
