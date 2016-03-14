@@ -15,6 +15,7 @@
 		B84D48721C947631006FDFEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B84D48701C947631006FDFEB /* Main.storyboard */; };
 		B84D48741C947631006FDFEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B84D48731C947631006FDFEB /* Assets.xcassets */; };
 		B84D48771C947631006FDFEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B84D48751C947631006FDFEB /* LaunchScreen.storyboard */; };
+		B872559B1C966EE10073E5A4 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B872559A1C966EE10073E5A4 /* InfiniteScrollActivityView.swift */; };
 		FB0143E0A364CFBA4E2F1477 /* Pods_Flicks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BA86EB335CD1819576DF601 /* Pods_Flicks.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		B84D48731C947631006FDFEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B84D48761C947631006FDFEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B84D48781C947631006FDFEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B872559A1C966EE10073E5A4 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				B83E9F2C1C9480C100B05661 /* MovieCell.swift */,
+				B872559A1C966EE10073E5A4 /* InfiniteScrollActivityView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B872559B1C966EE10073E5A4 /* InfiniteScrollActivityView.swift in Sources */,
 				B84D486D1C947631006FDFEB /* AppDelegate.swift in Sources */,
 				B83E9F2F1C948AD100B05661 /* MovieViewController.swift in Sources */,
 				B83E9F271C947E3300B05661 /* MoviesViewController.swift in Sources */,
