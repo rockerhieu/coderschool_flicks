@@ -43,7 +43,7 @@ class MovieViewController: UIViewController {
         overviewLabel.text = overview
         overviewLabel.sizeToFit()
         infoView.frame.size = CGSize(width: infoView.frame.width, height: titleView.frame.height + releaseDateView.frame.height + overviewLabel.frame.height + 30)
-        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height)
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height + 50)
         posterView.image = posterImage
         if let posterPath = movie["poster_path"].string {
             let imageUrl = Settings.getImageUrl(posterPath, size: 780)
