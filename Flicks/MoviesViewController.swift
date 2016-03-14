@@ -18,10 +18,12 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var loadingMoreView:InfiniteScrollActivityView?
     var refreshControl: UIRefreshControl!
+    var searchController: UISearchController!
     
     var isMoreDataLoading = false
     var page = 0
     var movies: [JSON]?
+    var filteredMovies: [JSON]?
     var endpoint: String?
 
     override func viewDidLoad() {
@@ -32,6 +34,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         setupErrorView()
         setupRefreshControl()
         setupInfiniteScrollLoadingIndicator()
+        setupSearchBar()
         loadMovies(refreshControl)
     }
 
@@ -59,6 +62,22 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func onErrorViewTap(sender: AnyObject) {
         loadMovies(refreshControl, pageIndex: page)
+    }
+    
+    func setupSearchBar() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+    }
+    
+    func filterContentForSearchText(searchText: String) {
+        filteredMovies = movies?.filter { movie in
+            return movie["title"].string!.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+        tableView.reloadData()
     }
 
     func loadMovies(refreshControl: UIRefreshControl) {
@@ -102,7 +121,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if (!isMoreDataLoading) {
+        if ((!searchController.active || searchController.searchBar.text == "") && !isMoreDataLoading) {
             let scrollViewContentHeight = tableView.contentSize.height
             let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
             
@@ -120,12 +139,20 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredMovies?.count ?? 0
+        }
         return self.movies?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MovieCell", forIndexPath: indexPath) as! MovieCell
-        let movie = movies![indexPath.row]
+        let movie: JSON
+        if searchController.active && searchController.searchBar.text != "" {
+            movie = filteredMovies![indexPath.row]
+        } else {
+            movie = movies![indexPath.row]
+        }
         let title = movie["title"].string
         let overview = movie["overview"].string
         cell.titleLabel.text = title
@@ -144,5 +171,11 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let movie = movies![indexPath!.row]
         let movieViewController = segue.destinationViewController as! MovieViewController
         movieViewController.movie = movie
+    }
+}
+
+extension MoviesViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }
